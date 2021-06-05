@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Choose_Your_Class
 {
@@ -51,14 +52,19 @@ namespace Choose_Your_Class
                         myGarage.AddCar(myCar);
                         break;
                     case "2":
-                        CarList();
+                        myGarage.CarList();
                         break;
                     case "3":
                         Console.Clear();
-                        Console.WriteLine("Choose a car to update: ");
-                        CarList();
-                        string userInput = Console.ReadLine();
-                        myCar = myGarage.ListOfCars.Find(C => C.Nickname == userInput);
+                        Console.WriteLine("Type the Nickname of car you wnat to update: ");
+                        myGarage.CarList();
+                        string nickname = Console.ReadLine();
+                        myCar = myGarage.ListOfCars.FirstOrDefault(car => car.Nickname == nickname);
+                        if(myCar == null)
+                        {
+                            Console.WriteLine("Try again");
+                            break;
+                        }
                         Console.WriteLine("What is the current mileage?");
                         int mileageUpdate = Convert.ToInt32(Console.ReadLine()); 
                         myCar.UpdateMileage(mileageUpdate);
@@ -66,24 +72,27 @@ namespace Choose_Your_Class
                     case "4":
                         Console.Clear();
                         Console.WriteLine("Choose a car to check on next service : ");
-                        CarList();                       
-                        int userCheck = Convert.ToInt32(Console.ReadLine());
-                        myCar = myGarage.ListOfCars[userCheck - 1];
+                        myGarage.CarList();                       
+                        int carIndex = Convert.ToInt32(Console.ReadLine());
+                        if (carIndex > myGarage.ListOfCars.Count || carIndex <= 0)
+                        {
+                            Console.WriteLine("Invalid Input");
+                            break;
+                        }
                         Console.WriteLine("What is the current mileage?");
-                        int mileageCheck = Convert.ToInt32(Console.ReadLine());
-                        myCar.MilesUntilService(mileageCheck);
+                        int mileageCheck = Convert.ToInt32(Console.ReadLine()); 
+                        myGarage.ListOfCars[carIndex - 1].MilesUntilService(mileageCheck);
                         break;
                     case "5":
                         Console.Clear();
                         Console.WriteLine("Choose a car to remove: ");
-                        CarList();
-                        //int index = 1;
-                        //foreach (var car in myGarage.ListOfCars)
-                        //{
-                        //    Console.WriteLine($"{index}. {car.Nickname}");
-                        //    index++;
-                        //}
+                        myGarage.CarList();
                         int userChoice = Convert.ToInt32(Console.ReadLine());
+                        if (userChoice > myGarage.ListOfCars.Count || userChoice <= 0)
+                        {
+                            Console.WriteLine("Invalid Input");
+                            break;
+                        }
                         myGarage.RemoveCar(userChoice - 1);
                         break;
                     case "6":
@@ -100,27 +109,6 @@ namespace Choose_Your_Class
 
             }
         }
-
-        public static void CarList()
-        {
-            int index = 1;
-            foreach (var car in myGarage.ListOfCars)
-            {
-                Console.WriteLine($"{index}. {car.Nickname}: {car.Make} {car.Model},{car.Mileage}mi");
-                index++;
-            }
-        }
-        //public void MilesUntilService(int mileageUpdate)
-        //{
-        //    if ((mileageUpdate - myCar.Mileage) >= 5000)
-        //    {
-        //        Console.WriteLine("Time for Service! Please Schedule a visit to your mechanic");
-        //    }
-        //    else
-        //    {
-        //        Console.WriteLine($"{mileageUpdate - myCar.Mileage} miles until next service");
-        //    }
-        //}
 
     }
 }

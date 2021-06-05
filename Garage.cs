@@ -30,5 +30,14 @@ namespace Choose_Your_Class
             ListOfCars.ElementAt<Car>(i);
         }
 
+        public void CarList()
+        {
+            int index = 1;
+            foreach (var car in ListOfCars)
+            {
+                Console.WriteLine($"{index}. {car.Nickname}: {car.Make} {car.Model},{car.Mileage}mi");
+                index++;
+            }
+        }
     }
 }
