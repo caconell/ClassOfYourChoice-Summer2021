@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Choose_Your_Class
 {
-   public class Car
+    public class Car
     {
         public string Make { get; set; }
         public string Model { get; set; }
@@ -15,19 +15,16 @@ namespace Choose_Your_Class
         public int Year { get; set; }
         public int Mileage { get; set; }
 
-
         public Car()
         {
-
         }
-        
+
         public Car(string make, string model, string nickname, int mileage)
         {
             Make = make;
             Model = model;
             Nickname = nickname;
             Mileage = mileage;
-            
         }
 
         public void UpdateMileage(int updatedMileage)
@@ -42,6 +39,7 @@ namespace Choose_Your_Class
                 Mileage = updatedMileage;
             }
         }
+
         public int GetMileage()
         {
             return Mileage;
@@ -49,20 +47,16 @@ namespace Choose_Your_Class
 
         public void MilesUntilService(int updatedMileage)
         {
-            
             if ((updatedMileage - Mileage) >= 5000)
             {
                 Console.WriteLine("Time for Service! Please Schedule a visit to your mechanic");
                 Mileage = updatedMileage;
             }
-             else if ((updatedMileage - Mileage) <= 5000)
+            else if ((updatedMileage - Mileage) <= 5000)
             {
-                Console.WriteLine($"{(5000 -(updatedMileage - Mileage))} miles until next service");
+                Console.WriteLine($"{(5000 - (updatedMileage - Mileage))} miles until next service");
                 Mileage = updatedMileage;
             }
-
         }
-       
-
     }
 }
